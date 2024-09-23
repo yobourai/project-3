@@ -21,11 +21,9 @@ typedef struct z_stack
 
 #include <stdlib.h>
 #include <stdio.h>
-
+int ft_mx(t_stack *b);
 int ft_max(t_stack *b);
-void	rrrr(int *list, int top);
-void	rrrra(int *list, int top);
-int range(int top, int list[], int start, int end);
+int range(int top, int *list, t_range *algo , int size);
 void push_to_a(t_stack *a, t_stack *b);
 int *bubble_sort(t_stack *a);
 void sorting_range(t_stack *a, t_stack *b, int sorted[], int option);

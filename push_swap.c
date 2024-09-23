@@ -42,20 +42,21 @@ int main(int ac, char *av[])
 	    a = parc(ac, av);
 		b = init(b, a->size);
 		// printstack(a ,b);
-		if(a->top <= 5)
+		if(a->size <= 5)
 			sort_five(a, b);
-		else if(a->top < 100)
+		else if(a->size <= 100)
 		{
 			int *list = bubble_sort(a);
-			sorting_range(a, b, list, 12);
+			sorting_range(a, b, list, 15);
 		}
-		else if(a->top >= 100)
+		else if(a->size > 100)
 		{
 			int *list = bubble_sort(a);
 			sorting_range(a, b, list, 30);
 		}
+		// printstack(a ,b);
+	
 	}
-	printstack(a ,b);
     return 0;
 
 }

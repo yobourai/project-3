@@ -95,159 +95,140 @@ int sorted(t_stack *a)
 	return(1);
 }
 
-
 int *bubble_sort(t_stack *a)
 {
 	int *res;
 	int i;
 	int j;
 	int t;
-	
-	res =(int *)malloc(sizeof(int) * (a->top) +1);
+
+	res =(int *)malloc(sizeof(int) * (a->top + 1));
 	i = 0;
-	while(i <= a->top)
+	j = 0;
+	while(i < a->top)
+	{
+		res[i] = a->arr[i];
+		i++;
+	}
+	res[i] = a->arr[i];
+	i = 0;
+	while(i < a->top -1 )
 	{
 		j = 0;
-		t = 0;
-		while(j <= a->top)
+		while(j < a->top - i)
 		{
-			if(a->arr[i] > a->arr[j])
-				t++;
+			if(res[j] > res[j + 1])
+			{
+				t  = res[j];
+				res[j] = res[j + 1];
+				res[j + 1] = t;
+			}
 			j++;
 		}
-		res[i] = t;
 		i++;
 	}
 	return (res);
+
 }
 
-void	rrrr(int *list, int top)
+int range(int a, int *list, t_range *algo , int size)
 {
-	int last;
-    int i;
-    if (top < 1) 
-        return;
-    last = list[top];
-    i = top;
-    
-    while (i >= 0)
-    {
-        list[i] = list[i - 1];
-        i--;
-    }
-    list[0] = last;
-}
-
-void	rrrra(int *list, int top)
-{
-    int first;
-    int i;
-    if (top <= 1) 
-        return;
-    first = list[0];
-    i = 0;
-    
-	while(i <= top)
+	int k = 0;
+	while(k < size)
 	{
-		list[i] = list[i + 1];
-		i++;
+		if(a ==list[k])
+			break;	
+		k++;
 	}
-    list[top] = first;
+	if(k >= algo->start  && k <= algo->end)
+		return 1;
+	else if(k < algo->start)
+		return 2;
+	return 0;
 }
-int range(int top, int list[], int start, int end)
-{
-    int k = 0;
-    int n = top;
 
-    while (start + k <= top) 
-    {
-        if (list[start + k] < end)
-            break;
-        k++;
-    }
-
-    if (k == 0) 
-        return 1; 
-
-    while (n > start && n < end ) 
-    {
-        if (list[n] < end)
-            break;
-        n--;
-    }
-
-    if (n > end - k)
-        return 2;
-
-    return 0; 
-}
 void sorting_range(t_stack *a, t_stack *b, int sorted[], int option)
 {
-    t_range algo;
-
-    algo.start = 0;
+    t_range *algo;
+	algo = malloc(sizeof(t_range));
+	int size ;
+	size = a->size ;
+    algo->start = 0;
+	algo->end = option;
     while (a->top > -1)
-    {   algo.op = range(a->top, sorted, algo.start, option);
+    {   algo->op = range(a->arr[a->top], sorted, algo , size);
         
-        if (algo.op == 1)
+        if (algo->op == 1)
         {
             pb(a, b);
-            algo.start++;
-            option++;
+            algo->start++;
+            algo->end++;
         }
-        else if (algo.op == 0)
+        else if (algo->op == 0)
         {
             ra(a);
         }
-        else if (algo.op == 2)
+        else if (algo->op == 2)
         {
-			rra(a); 
-
+			// rra(a);
+				pb(a,b);
+				rb(b);
+			algo->start++;
+            algo->end++;
         }
     }
- 
+
     push_to_a(a, b);
+	// printstack(a,b);
 }
 
 int ft_max(t_stack *b)
 {
 	int i;
 	int max;
-
+	i = 0;
+	max = b->top;
+	while(i < b->top)
+	{
+		if(b->arr[max] < b->arr[i])
+			max = i; 
+		i++;
+	}
+	return(b->arr[max]);
+}
+int ft_mx(t_stack *b)
+{
+	int i;
+	int max;
 	i = 0;
 	max = b->top;
 	while(i < b->top)
 	{
 		if(b->arr[max] < b->arr[i])     /// 1 4 5 8 89 7 6 2
-			max = i; //  1 
+			max = i; //  
 		i++;
 	}
 	return(max);
 }
-
 void push_to_a(t_stack *a, t_stack *b)
 {
 	int max;
+	int mx ;
+	max = ft_max(b);
 
-	while(b->top > -1)
+	while(b->top > 0)
 	{
 		max = ft_max(b);
-		if(max)
+		if(max == b->arr[b->top])
+			pa(a,b);
+		else
 		{
-			if (max <= b->top / 2)
-			{
-				while (max--)
-					rb(b);
-			}
+			mx = ft_mx(b);
+			if (mx <= b->size / 2)
+				rrb(b);
 			else
-			{
-				max = b->top - max;
-				while (max--)
-					rrb(b);
-			}
+				rb(b);
 		}
-		pa(a, b);
-		// printf("b->top %d\n", b->top);
 	}
-	// exit(0);
+	pa(a,b);	
 }
