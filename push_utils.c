@@ -94,7 +94,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (str);
 }
 
-static int	ft_nbw(char  *s, char c)
+int	ft_nbw(char  *s, char c)
 {
 	int	j;
 	int	i;
@@ -114,7 +114,7 @@ static int	ft_nbw(char  *s, char c)
 	return (j);
 }
 
-static int	ft_nbc(char  *s, char c)
+int	ft_nbc(char  *s, char c)
 {
 	int	i;
 	int	j;
@@ -134,8 +134,7 @@ static int	ft_nbc(char  *s, char c)
 	}
 	return (j);
 }
-
-static	void	ft_free(char **s)
+void	ft_free(char **s)
 {
 	int	i;
 
@@ -148,7 +147,7 @@ static	void	ft_free(char **s)
 	free(s);
 }
 
-static	char	**ft_uncj(char **tab, char  *s, char c, int j)
+char	**ft_uncj(char **tab, char  *s, char c, int j)
 {
 	int	i;
 	int	start;
@@ -212,13 +211,15 @@ int	ft_long(int n)
 }
 int ft_atoi(char *str , int *flag)
  {
-    int i = 0;
-    int sign = 1;
-         int result = 0;
+    int i ;
+    int sign;
+    int result ;
 
+	i= 0;
+	sign = 1;
+    result = 0;
     while (str[i] == ' ' || str[i] == '\t' || (str[i] >= 9 && str[i] <= 13))
         i++;
-
     if (str[i] == '+' || str[i] == '-') 
     {
         if (str[i] == '-')
@@ -227,21 +228,19 @@ int ft_atoi(char *str , int *flag)
     }
     if(!(str[i] >= '0' && str[i] <= '9'))
     {
-        printf("Error\n");
+        write(2,"Error\n",6);
         *flag = 1;
     }
     while (str[i] >= '0' && str[i] <= '9')
-    {
-        result = result * 10 + (str[i] - '0');
-        i++;
-    }
+        result = result * 10 + (str[i++] - '0');
     if(ft_long(result*sign)!= ft_strlen(str))
     {
-        printf("Error bad character\n");
+        write(2,"Error\n",6);
         *flag = 1;
     }
     return result * sign;
 }
+
 
 int len(char ***ptr)
 {

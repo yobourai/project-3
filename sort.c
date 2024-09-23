@@ -1,8 +1,5 @@
 #include "push_swap.h"
 
-
-
-
 void sort_fc(t_stack *arr)
 {
 	if(arr->size <= 1)
@@ -103,6 +100,8 @@ int *bubble_sort(t_stack *a)
 	int t;
 
 	res =(int *)malloc(sizeof(int) * (a->top + 1));
+	if(!res)
+	    return 0;
 	i = 0;
 	j = 0;
 	while(i < a->top)
@@ -128,7 +127,6 @@ int *bubble_sort(t_stack *a)
 		i++;
 	}
 	return (res);
-
 }
 
 int range(int a, int *list, t_range *algo , int size)
@@ -150,14 +148,17 @@ int range(int a, int *list, t_range *algo , int size)
 void sorting_range(t_stack *a, t_stack *b, int sorted[], int option)
 {
     t_range *algo;
-	algo = malloc(sizeof(t_range));
 	int size ;
+
+	algo = malloc(sizeof(t_range));
+	if(!algo)
+	    return ;
 	size = a->size ;
     algo->start = 0;
 	algo->end = option;
     while (a->top > -1)
-    {   algo->op = range(a->arr[a->top], sorted, algo , size);
-        
+    {    
+      algo->op = range(a->arr[a->top], sorted, algo , size);
         if (algo->op == 1)
         {
             pb(a, b);
@@ -165,21 +166,16 @@ void sorting_range(t_stack *a, t_stack *b, int sorted[], int option)
             algo->end++;
         }
         else if (algo->op == 0)
-        {
             ra(a);
-        }
         else if (algo->op == 2)
         {
-			// rra(a);
 				pb(a,b);
 				rb(b);
 			algo->start++;
             algo->end++;
         }
     }
-
     push_to_a(a, b);
-	// printstack(a,b);
 }
 
 int ft_max(t_stack *b)
@@ -204,8 +200,7 @@ int ft_mx(t_stack *b)
 	max = b->top;
 	while(i < b->top)
 	{
-		if(b->arr[max] < b->arr[i])     /// 1 4 5 8 89 7 6 2
-			max = i; //  
+		if(b->arr[max] < b->arr[i])
 		i++;
 	}
 	return(max);

@@ -34,14 +34,14 @@ int main(int ac, char *av[])
 {
 	t_stack *a;
 	t_stack *b;
-
+      b = 0;
 	if(ac != 1)
 	{
-	    int *tab;
-    	int i = 0;
 	    a = parc(ac, av);
 		b = init(b, a->size);
 		// printstack(a ,b);
+
+	       
 		if(a->size <= 5)
 			sort_five(a, b);
 		else if(a->size <= 100)
@@ -54,7 +54,8 @@ int main(int ac, char *av[])
 			int *list = bubble_sort(a);
 			sorting_range(a, b, list, 30);
 		}
-		// printstack(a ,b);
+	
+		printstack(a ,b);
 	
 	}
     return 0;

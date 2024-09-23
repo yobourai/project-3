@@ -21,8 +21,16 @@ typedef struct z_stack
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+
+int check_for_errors(t_stack *stack);
+void handle_error(void);
+int fill_stack(t_stack *stack, char ***ptr);
+char ***parse_input(int ac, char *av[]);
+t_stack *initialize_stack(int total_size);
 int ft_mx(t_stack *b);
 int ft_max(t_stack *b);
+int sorted(t_stack *a);
 int range(int top, int *list, t_range *algo , int size);
 void push_to_a(t_stack *a, t_stack *b);
 int *bubble_sort(t_stack *a);
@@ -33,11 +41,11 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	*ft_strdup( char *s1);
-static int	ft_nbw(char  *s, char c);
+int	ft_nbw(char  *s, char c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
-static int	ft_nbc(char  *s, char c);
-static	void	ft_free(char **s);
-static	char	**ft_uncj(char **tab, char  *s, char c, int j);
+int	ft_nbc(char  *s, char c);
+void	ft_free(char **s);
+char	**ft_uncj(char **tab, char  *s, char c, int j);
 char	**ft_split(char  *s, char c);
 int	ft_long(int n);
 int ft_atoi(char *str , int *flag);
